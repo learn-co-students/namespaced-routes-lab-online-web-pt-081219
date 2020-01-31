@@ -25,7 +25,12 @@ class SongsController < ApplicationController
   end
 
   def new
-    @song = Song.new
+    @preferece = Preference.first
+    if @preferece.allow_create_songs
+      @song = Song.new
+    else
+      redirect_to songs_path, alert: "Songs creation denied"
+    end
   end
 
   def create
